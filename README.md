@@ -1,1 +1,6 @@
-# unofficialJojiarchive
+# Unofficial Joji Archive
+Jojiのディスコグラフィーを見れるサイトを作りました
+ほぼAIにやってもらいましたが、僕自身で作ったところもぼちぼちあります
+
+In Tonguesなんですけどとりあえず今は一旦、Deluxeの方だけの記載ということで
+まあまたぼちぼち更新していきます。
