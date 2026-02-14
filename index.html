@@ -61,6 +61,18 @@
 
         .track-row { transition: all 0.3s ease; }
         .track-row:hover { background-color: rgba(255, 255, 255, 0.03); }
+
+        /* PCでの説明文エリアの固定設定 */
+        @media (min-width: 1024px) {
+            .sticky-info {
+                position: sticky;
+                top: 12rem;
+                max-height: calc(100vh - 15rem);
+                overflow-y: auto;
+                padding-right: 1rem;
+            }
+            .sticky-info::-webkit-scrollbar { width: 2px; }
+        }
     </style>
 </head>
 <body>
@@ -110,17 +122,21 @@
                 ← RETURN TO ARCHIVE
             </button>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+                <!-- 左側：ジャケ写と説明文（PCで固定） -->
                 <div class="lg:col-span-5">
-                    <div class="sticky top-48">
-                        <img id="detail-cover" src="" class="w-full aspect-square object-cover shadow-2xl rounded-sm mb-12">
-                        <div class="space-y-8">
-                            <h1 id="detail-title" class="font-serif-display text-6xl md:text-8xl italic leading-none"></h1>
-                            <p id="detail-desc" class="text-gray-400 text-sm leading-[2.2] max-w-sm whitespace-pre-wrap font-light"></p>
+                    <div class="sticky-info">
+                        <img id="detail-cover" src="" class="w-full aspect-square object-cover shadow-2xl rounded-sm mb-10">
+                        <div class="space-y-6">
+                            <h1 id="detail-title" class="font-serif-display text-5xl md:text-7xl italic leading-none"></h1>
+                            <div class="w-12 h-[1px] bg-red-600"></div>
+                            <p id="detail-desc" class="text-gray-300 text-sm md:text-base leading-[2] max-w-md whitespace-pre-wrap font-light"></p>
                         </div>
                     </div>
                 </div>
-                <div class="lg:col-span-7 pt-4">
+                
+                <!-- 右側：トラックリスト -->
+                <div class="lg:col-span-7">
                     <div id="tracklist" class="divide-y divide-white/5 border-t border-white/5">
                         <!-- Tracks injected by JS -->
                     </div>
@@ -128,7 +144,7 @@
             </div>
         </div>
 
-        <!-- Track Modal (Tap anywhere outside content to close) -->
+        <!-- Track Modal -->
         <div id="track-modal" class="fixed inset-0 flex flex-col items-center justify-center hidden-view px-6 backdrop-blur-3xl cursor-none">
             <div class="absolute top-12 pointer-events-none">
                 <img src="https://diggers-public.s3.eu-west-3.amazonaws.com/shops/c2c943fb-7d7d-46ac-b026-2969e5a42cad.png" class="h-10 opacity-40" style="filter: invert(1) brightness(2);">
@@ -295,19 +311,11 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Tap anywhere on the modal background to close
-        document.getElementById('track-modal').addEventListener('click', function(e) {
-            // Close regardless of where they click on the background or content for ultimate ease
+        document.getElementById('track-modal').addEventListener('click', function() {
             closeModal();
         });
 
-        // Prevent closing ONLY if they click the link itself
         document.getElementById('modal-content').addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        // Genius link special case
-        document.getElementById('genius-link').addEventListener('click', function(e) {
             e.stopPropagation();
         });
 
