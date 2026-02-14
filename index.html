@@ -62,16 +62,15 @@
         .track-row { transition: all 0.3s ease; }
         .track-row:hover { background-color: rgba(255, 255, 255, 0.03); }
 
-        /* PCでの説明文エリアの固定設定 */
+        /* PCレイアウトの改善：ジャケ写と説明文をスクロールさせずセットで表示 */
         @media (min-width: 1024px) {
-            .sticky-info {
+            .sticky-container {
                 position: sticky;
-                top: 12rem;
-                max-height: calc(100vh - 15rem);
-                overflow-y: auto;
-                padding-right: 1rem;
+                top: 10rem;
+                display: flex;
+                flex-direction: column;
+                gap: 2.5rem;
             }
-            .sticky-info::-webkit-scrollbar { width: 2px; }
         }
     </style>
 </head>
@@ -118,19 +117,25 @@
 
         <!-- Album Detail View -->
         <div id="album-view" class="hidden-view fade-in-up">
-            <button onclick="showHome()" class="mb-16 flex items-center gap-4 text-[10px] tracking-[0.3em] text-gray-500 hover:text-white transition-colors cursor-none">
+            <button onclick="showHome()" class="mb-12 flex items-center gap-4 text-[10px] tracking-[0.3em] text-gray-500 hover:text-white transition-colors cursor-none">
                 ← RETURN TO ARCHIVE
             </button>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-                <!-- 左側：ジャケ写と説明文（PCで固定） -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                <!-- 左側：ジャケ写と説明文を一気に見せるエリア -->
                 <div class="lg:col-span-5">
-                    <div class="sticky-info">
-                        <img id="detail-cover" src="" class="w-full aspect-square object-cover shadow-2xl rounded-sm mb-10">
+                    <div class="sticky-container">
+                        <!-- ジャケット -->
+                        <div class="w-full">
+                            <img id="detail-cover" src="" class="w-full aspect-square object-cover shadow-2xl rounded-sm">
+                        </div>
+                        <!-- 説明文 -->
                         <div class="space-y-6">
-                            <h1 id="detail-title" class="font-serif-display text-5xl md:text-7xl italic leading-none"></h1>
-                            <div class="w-12 h-[1px] bg-red-600"></div>
-                            <p id="detail-desc" class="text-gray-300 text-sm md:text-base leading-[2] max-w-md whitespace-pre-wrap font-light"></p>
+                            <div class="space-y-2">
+                                <h1 id="detail-title" class="font-serif-display text-5xl md:text-7xl italic leading-none"></h1>
+                                <div class="w-12 h-[1px] bg-red-600 mt-4"></div>
+                            </div>
+                            <p id="detail-desc" class="text-gray-300 text-sm md:text-base leading-[2.2] max-w-md whitespace-pre-wrap font-light tracking-wide"></p>
                         </div>
                     </div>
                 </div>
@@ -311,17 +316,9 @@
             document.body.style.overflow = 'auto';
         }
 
-        document.getElementById('track-modal').addEventListener('click', function() {
-            closeModal();
-        });
-
-        document.getElementById('modal-content').addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") closeModal();
-        });
+        document.getElementById('track-modal').addEventListener('click', closeModal);
+        document.getElementById('modal-content').addEventListener('click', e => e.stopPropagation());
+        document.addEventListener('keydown', e => { if (e.key === "Escape") closeModal(); });
 
         window.addEventListener('load', () => {
             setTimeout(() => {
