@@ -127,7 +127,7 @@
                     <div class="sticky-container">
                         <!-- ジャケット -->
                         <div class="w-full">
-                            <img id="detail-cover" src="" class="w-full aspect-square object-cover shadow-2xl rounded-sm">
+                            <img id="detail-cover" src="" class="w-full aspect-square object-cover shadow-2xl rounded-sm" referrerpolicy="no-referrer" loading="lazy">
                         </div>
                         <!-- 説明文 -->
                         <div class="space-y-6">
@@ -219,6 +219,15 @@
                 tracks: ["Ew", "MODUS", "Tick Tock", "Daylight (with Diplo)", "Upgrade", "Gimme Love", "Run", "Sanctuary", "High Hopes", "NITROUS", "Pretty Boy", "Normal People", "Afterthought", "Mr. Hollywood", "777", "Reanimator", "Like You Do", "Your Man"]
             },
             {
+                id: 'lost-ballads',
+                title: 'LOST BALLADS',
+                year: '2019',
+                type: 'EP / VHS',
+                cover: 'https://ia801806.us.archive.org/8/items/lost-ballads/MP3%202/Lost%20Ballads.jpg',
+                description: "LOST BALLADS は、2019年に発表された短編EP的コレクション。\n\nBallads 1 の制作過程で公式アルバムには収録されなかった未発表曲や、リミックス楽曲をまとめた作品で、オリジナル音源の周辺にある断片的な音像や未公開のアイデアをファンに提示している。\n元々は限定VHSテープとして映像とともに公開されたものであり、作品全体が内省的な感情と実験的な断片を含んだ“未完の物語”として位置づけられている。",
+                tracks: ["DON'T YOU KNOW", "CAN U HEAR ME", "CAN'T GET OVER YOU (Channel Tres Remix)"]
+            },
+            {
                 id: 'ballads1',
                 title: 'BALLADS 1',
                 year: '2018',
@@ -279,7 +288,7 @@
             div.className = "album-card group relative cursor-none";
             div.innerHTML = `
                 <div class="relative aspect-square overflow-hidden mb-8 shadow-2xl transition-transform duration-700 ease-out group-hover:-translate-y-4">
-                    <img src="${album.cover}" class="w-full h-full object-cover transition-transform duration-1000 grayscale-[10%] group-hover:grayscale-0">
+                    <img src="${album.cover}" class="w-full h-full object-cover transition-transform duration-1000 grayscale-[10%] group-hover:grayscale-0" referrerpolicy="no-referrer" loading="lazy">
                     <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
                 </div>
                 <div class="space-y-2">
@@ -358,5 +367,3 @@
     </script>
 </body>
 </html>
-
-
