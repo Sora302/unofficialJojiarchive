@@ -62,7 +62,6 @@
         .track-row { transition: all 0.3s ease; }
         .track-row:hover { background-color: rgba(255, 255, 255, 0.03); }
 
-        /* PCレイアウトの改善：ジャケ写と説明文をスクロールさせずセットで表示 */
         @media (min-width: 1024px) {
             .sticky-container {
                 position: sticky;
@@ -122,14 +121,11 @@
             </button>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
-                <!-- 左側：ジャケ写と説明文を一気に見せるエリア -->
                 <div class="lg:col-span-5">
                     <div class="sticky-container">
-                        <!-- ジャケット -->
                         <div class="w-full">
                             <img id="detail-cover" src="" class="w-full aspect-square object-cover shadow-2xl rounded-sm" referrerpolicy="no-referrer" loading="lazy">
                         </div>
-                        <!-- 説明文 -->
                         <div class="space-y-6">
                             <div class="space-y-2">
                                 <h1 id="detail-title" class="font-serif-display text-5xl md:text-7xl italic leading-none"></h1>
@@ -140,7 +136,6 @@
                     </div>
                 </div>
                 
-                <!-- 右側：トラックリスト -->
                 <div class="lg:col-span-7">
                     <div id="tracklist" class="divide-y divide-white/5 border-t border-white/5">
                         <!-- Tracks injected by JS -->
@@ -223,7 +218,7 @@
                 title: 'LOST BALLADS',
                 year: '2019',
                 type: 'EP / VHS',
-                cover: 'https://ia801806.us.archive.org/8/items/lost-ballads/MP3%202/Lost%20Ballads.jpg',
+                cover: 'https://images.genius.com/a5a7454f3a87b9b269f755b71e7c3c71.1000x1000x1.jpg',
                 description: "LOST BALLADS は、2019年に発表された短編EP的コレクション。\n\nBallads 1 の制作過程で公式アルバムには収録されなかった未発表曲や、リミックス楽曲をまとめた作品で、オリジナル音源の周辺にある断片的な音像や未公開のアイデアをファンに提示している。\n元々は限定VHSテープとして映像とともに公開されたものであり、作品全体が内省的な感情と実験的な断片を含んだ“未完の物語”として位置づけられている。",
                 tracks: ["DON'T YOU KNOW", "CAN U HEAR ME", "CAN'T GET OVER YOU (Channel Tres Remix)"]
             },
@@ -270,6 +265,24 @@
                 cover: 'https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/2b/75/b6/2b75b6e9-8b1b-f52d-2df0-4affdeae1a76/888915464021_cover.jpg/600x600bb.jpg',
                 description: "YouTube時代からアーティストへと本格的に舵を切った最初のEP。\n「Will He」などを通して、失恋や自己嫌悪、孤独をミニマルで内省的なサウンドに落とし込み、Jojiの音楽的アイデンティティを確立した出発点となった作品。",
                 tracks: ["Will He", "Pills", "Demons", "Window", "Bitter Fuck", "worldstar money (interlude)"]
+            },
+            {
+                id: 'lost-instruments',
+                title: 'Lost Instruments',
+                year: '2017',
+                type: 'EP',
+                cover: 'https://images.genius.com/36ea36178bca3d0dda385b8f2e9a56c2.1000x1000x1.jpg',
+                description: "\"Lost Instruments\"は、In Tongues期の未発表インストゥルメンタルをまとめたコレクションで、当時の制作素材や実験的音像が原型のまま収録されている。Joji の音楽的探索の初期段階を垣間見せる作品である。",
+                tracks: ["Diamonds On My Dick", "Amazonian Pet", "Nightmares Of The Invertebrate"]
+            },
+            {
+                id: 'chloe-burbank',
+                title: 'Chloe Burbank Vol. 1',
+                year: 'YEAR UNKNOWN / N/A',
+                type: 'DEMO ALBUM',
+                cover: 'https://images.genius.com/a303d667fb19c383f71c5344e609887c.1000x1000x1.jpg',
+                description: "Joji が Filthy Frank 時代に制作していた未完成のアルバム・プロジェクト。公式にはリリースされず、後のキャリアへ向かう過程で制作されたデモや未発表音源としてごく一部の楽曲であるThom、you suck charlieが SoundCloud 等で公開されたに留まる。作品全体の確定したトラックリストは存在しない。",
+                tracks: ["Thom", "you suck charlie"]
             }
         ];
 
