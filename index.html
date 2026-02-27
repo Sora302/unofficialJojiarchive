@@ -53,8 +53,6 @@
             z-index: 2000;
         }
 
-        .album-card:hover img { transform: scale(1.05); }
-        
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
@@ -70,6 +68,113 @@
                 flex-direction: column;
                 gap: 2.5rem;
             }
+        }
+
+        /* ===============================
+           GLOBAL VISUAL ENHANCEMENTS
+        ================================ */
+
+        :root {
+          --grain-opacity: 0.06;
+        }
+
+        /* --- Film Grain Overlay --- */
+        body::before {
+          content: "";
+          position: fixed;
+          inset: -50%;
+          background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/Noise.png");
+          opacity: var(--grain-opacity);
+          pointer-events: none;
+          z-index: 9999;
+          animation: grainMove 1.5s steps(6) infinite;
+        }
+
+        @keyframes grainMove {
+          0% { transform: translate(0,0); }
+          100% { transform: translate(-10%, -10%); }
+        }
+
+        /* --- Album Card Depth & Tilt --- */
+        .album-card {
+          transform-style: preserve-3d;
+          transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+          transform: translateY(var(--parallax-offset, 0));
+        }
+
+        .album-card:hover {
+          /* ホバー時はパララックス位置を維持しつつ上に浮かせ、回転を加える */
+          transform: translateY(calc(var(--parallax-offset, 0px) - 12px)) rotateX(2deg) rotateZ(-0.4deg);
+        }
+
+        .album-card img {
+          transition: transform 1.2s cubic-bezier(0.16,1,0.3,1), filter 0.8s;
+        }
+
+        .album-card:hover img {
+          transform: scale(1.08);
+          filter: contrast(1.1) brightness(1.05);
+        }
+
+        /* --- Floating Cover (Album View) --- */
+        #detail-cover {
+          animation: floatCover 6s ease-in-out infinite;
+        }
+
+        @keyframes floatCover {
+          0%,100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+
+        /* --- Track Row Micro Distortion --- */
+        .track-row h3 {
+          transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+                      letter-spacing 0.35s;
+        }
+
+        .track-row:hover h3 {
+          transform: translateX(4px) skewX(-1deg);
+          letter-spacing: 0.02em;
+        }
+
+        /* --- Number Lag Effect --- */
+        .track-row span {
+          transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .track-row:hover span {
+          transform: translateX(-6px);
+        }
+
+        /* --- Modal Cinematic Feel --- */
+        #track-modal {
+          animation: modalFade 0.6s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        @keyframes modalFade {
+          from {
+            opacity: 0;
+            transform: scale(1.02);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        /* --- Subtle Text Flicker --- */
+        .font-serif-display {
+          text-shadow: 0 0 0 transparent;
+        }
+
+        .font-serif-display:hover {
+          animation: textFlicker 1.5s infinite;
+        }
+
+        @keyframes textFlicker {
+          0% { text-shadow: 0 0 0 rgba(255,255,255,0); }
+          50% { text-shadow: 0 0 6px rgba(255,255,255,0.12); }
+          100% { text-shadow: 0 0 0 rgba(255,255,255,0); }
         }
     </style>
 </head>
@@ -238,24 +343,7 @@
                 type: 'EP / DELUXE',
                 cover: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/04/34/0d/04340d45-f801-02f2-f1d4-b01b013cb571/888915539828_cover.jpg/600x600bb.jpg',
                 description: "YouTube時代からアーティストへと本格的に舵を切った最初のEP。\n「Will He」などを通して、失恋や自己嫌悪、孤独をミニマルで内省的なサウンドに落とし込み、Jojiの音楽的アイデンティティを確立した出発点となった作品。\n\nIn Tongues (Deluxe)は追加楽曲と複数のリミックスを収録した拡張版。\n初期の内省的な世界観を保ちながらも、異なるプロデューサーの解釈を通じて、作品の輪郭をより立体的に提示している。",
-                tracks: [
-                    "Will He", 
-                    "Pills", 
-                    "Demons", 
-                    "Window", 
-                    "Bitter Fuck", 
-                    "worldstar money (interlude)", 
-                    "Plastic Taste", 
-                    "I Don't Wanna Waste My Time",
-                    "Will He (Medasin Remix)",
-                    "Will He (Ryan Hemsworth Remix)",
-                    "Demons (Lapalux Remix)",
-                    "Demons (Lunice Remix)",
-                    "Window (Actress Remix)",
-                    "Pills (HWLS Remix)",
-                    "Bitter Fuck (salute remix)",
-                    "I Don't Wanna Waste My Time (SwuM Remix)"
-                ]
+                tracks: ["Will He", "Pills", "Demons", "Window", "Bitter Fuck", "worldstar money (interlude)", "Plastic Taste", "I Don't Wanna Waste My Time", "Will He (Medasin Remix)", "Will He (Ryan Hemsworth Remix)", "Demons (Lapalux Remix)", "Demons (Lunice Remix)", "Window (Actress Remix)", "Pills (HWLS Remix)", "Bitter Fuck (salute remix)", "I Don't Wanna Waste My Time (SwuM Remix)"]
             },
             {
                 id: 'intongues-original',
@@ -376,6 +464,73 @@
                     setTimeout(() => loader.style.display = 'none', 1000);
                 }
             }, 1000);
+        });
+
+        /* ===============================
+           SCROLL & MOTION ENHANCEMENTS
+        ================================ */
+
+        // --- Scroll-based parallax for album cards ---
+        window.addEventListener('scroll', () => {
+          const cards = document.querySelectorAll('.album-card');
+          const scrollY = window.scrollY;
+
+          cards.forEach((card, i) => {
+            const offset = (scrollY * 0.04) * (i % 2 === 0 ? 1 : -1);
+            // CSS変数として値をセット
+            card.style.setProperty('--parallax-offset', `${offset}px`);
+          });
+        });
+
+        // --- Cursor magnetic pull ---
+        function applyMagneticEffect() {
+            document.querySelectorAll('.album-card, .track-row').forEach(el => {
+                el.addEventListener('mousemove', e => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    // ホバー時のベースとなる移動・回転（CSSと同期）
+                    const isCard = el.classList.contains('album-card');
+                    if (isCard) {
+                        // カードの場合はパララックス変数を使用しつつ磁気効果を追加
+                        const pOffset = el.style.getPropertyValue('--parallax-offset') || '0px';
+                        el.style.transform = `translateY(calc(${pOffset} - 12px)) rotateX(2deg) rotateZ(-0.4deg) translate(${x * 0.02}px, ${y * 0.02}px)`;
+                    } else {
+                        el.style.transform = `translate(${x * 0.02}px, ${y * 0.02}px)`;
+                    }
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    const isCard = el.classList.contains('album-card');
+                    if (isCard) {
+                        const pOffset = el.style.getPropertyValue('--parallax-offset') || '0px';
+                        el.style.transform = `translateY(${pOffset})`;
+                    } else {
+                        // プロパティ自体を削除することでCSSの変数値が優先されるように
+                        el.style.removeProperty('transform');
+                    }
+                });
+            });
+        }
+        
+        applyMagneticEffect();
+        const observer = new MutationObserver(applyMagneticEffect);
+        observer.observe(document.getElementById('tracklist'), { childList: true });
+
+        // --- Scroll Velocity Detection ---
+        let lastScroll = 0;
+        let velocity = 0;
+
+        window.addEventListener('scroll', () => {
+          const current = window.scrollY;
+          velocity = Math.abs(current - lastScroll);
+          lastScroll = current;
+
+          document.documentElement.style.setProperty(
+            '--grain-opacity',
+            Math.min(0.12, 0.04 + velocity * 0.0004)
+          );
         });
     </script>
 </body>
